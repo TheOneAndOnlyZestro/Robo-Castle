@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\Dev\OpenGlDependencies\GLEW\include;F:\Dev\OpenGlDependencies\GLFW\include;F:\Dev\OpenGlDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Dev\OpenGlDependencies\GLEW\include;F:\Dev\OpenGlDependencies\GLFW\include;F:\Dev\OpenGlDependencies\glm;$(SolutionDir)Robo-Castle\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,7 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\Dev\OpenGlDependencies\GLEW\include;F:\Dev\OpenGlDependencies\GLFW\include;F:\Dev\OpenGlDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Dev\OpenGlDependencies\GLEW\include;F:\Dev\OpenGlDependencies\GLFW\include;F:\Dev\OpenGlDependencies\glm;$(SolutionDir)Robo-Castle\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\Dev\OpenGlDependencies\GLEW\include;F:\Dev\OpenGlDependencies\GLFW\include;F:\Dev\OpenGlDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Dev\OpenGlDependencies\GLEW\include;F:\Dev\OpenGlDependencies\GLFW\include;F:\Dev\OpenGlDependencies\glm;$(SolutionDir)Robo-Castle\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,7 +139,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\Dev\OpenGlDependencies\GLEW\include;F:\Dev\OpenGlDependencies\GLFW\include;F:\Dev\OpenGlDependencies\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Dev\OpenGlDependencies\GLEW\include;F:\Dev\OpenGlDependencies\GLFW\include;F:\Dev\OpenGlDependencies\glm;$(SolutionDir)Robo-Castle\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,11 +152,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Engine\BufferPool.cpp" />
+    <ClCompile Include="Engine\Components\Texture\Bitmap.cpp" />
+    <ClCompile Include="Engine\Components\BufferPool.cpp" />
+    <ClCompile Include="Engine\Components\Shader.cpp" />
+    <ClCompile Include="Engine\Components\Texture\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\BufferPool.h" />
+    <ClInclude Include="Engine\Components\Texture\Bitmap.h" />
+    <ClInclude Include="Engine\Components\BufferPool.h" />
+    <ClInclude Include="Engine\Components\ComponentInfo.h" />
+    <ClInclude Include="Engine\Components\Uniform.h" />
+    <ClInclude Include="Engine\DebugTools\LogItem.h" />
     <ClInclude Include="Engine\Math\Vertex.h" />
+    <ClInclude Include="Engine\Components\Shader.h" />
+    <ClInclude Include="Engine\Components\Texture\Texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -14,6 +14,7 @@ namespace GFX_Engine {
 		struct DrawCallData {
 			GLenum PrimitiveType;
 			unsigned int IndiceNumber;
+			unsigned int* Indices;
 		};
 	public:
 		BufferPool();

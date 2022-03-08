@@ -52,6 +52,11 @@ namespace Geometry {
 		const float* operator&() const {
 			return &pos.x;
 		}
+
+		//Utility Functions
+		static unsigned int GetSize(){
+			return sizeof(float) * 3 + sizeof(float) * 2 + sizeof(float) * 4 + sizeof(unsigned int);
+		}
 	public:
 		union
 		{
