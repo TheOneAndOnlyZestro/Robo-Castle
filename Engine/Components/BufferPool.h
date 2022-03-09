@@ -34,6 +34,7 @@ namespace GFX_Engine {
 
 		virtual void Log() const;
 		DrawCallData GetDrawCallInfo() const;
+		ComponentInfo<2> GetComponentInfo();
 
 		~BufferPool();
 		BufferPool(const BufferPool& rtside);

@@ -5,8 +5,7 @@ public:
 	static void DefaultSetAttributeFunction();
 	static DrawCallData DefaultGenerateElementsFunction(unsigned int Quads);
 public:
-	ComponentInfo m_VertexBufferInfo;
-	ComponentInfo m_ElementsInfo;
+	ComponentInfo<2> m_ComponentInfo;
 	DrawCallData m_DrawCallData;
 	std::vector<Geometry::Vertex> m_Vertices;
 	std::function<void()> m_SetUpAttribFunc;
@@ -51,12 +50,12 @@ GFX_Engine::BufferPool::DrawCallData GFX_Engine::BufferPool::impl::DefaultGenera
 GFX_Engine::BufferPool::BufferPool()
 {
 	m_impl = new impl();
-	m_impl->m_VertexBufferInfo.m_Comptype = GFX_Engine::ComponentInfo::ComponentType::GFX_BUFFER_POOL;
-	m_impl->m_ElementsInfo.m_Comptype = GFX_Engine::ComponentInfo::ComponentType::GFX_BUFFER_POOL;
+	m_impl->m_ComponentInfo.m_Comptype = GFX_Engine::ComponentInfo<2>::ComponentType::GFX_BUFFER_POOL;
+	m_impl->m_ComponentInfo.m_Comptype = GFX_Engine::ComponentInfo<2>::ComponentType::GFX_BUFFER_POOL;
 
 	//Opengl Functions
-	glGenBuffers(1, &m_impl->m_VertexBufferInfo.m_RendererID);
-	glBindBuffer(GL_VERTEX_ARRAY, m_impl->m_VertexBufferInfo.m_RendererID);
+	glGenBuffers(1, &m_impl->m_ComponentInfo.m_RendererID[0]);
+	glBindBuffer(GL_VERTEX_ARRAY, m_impl->m_ComponentInfo.m_RendererID[0]);
 	glBufferData(GL_VERTEX_ARRAY, 1024, nullptr, GL_DYNAMIC_DRAW);
 
 	m_impl->m_SetUpAttribFunc = impl::DefaultSetAttributeFunction;
@@ -66,12 +65,12 @@ GFX_Engine::BufferPool::BufferPool()
 GFX_Engine::BufferPool::BufferPool(const std::function<void()>& SetUpAttribFunc)
 {
 	m_impl = new impl();
-	m_impl->m_VertexBufferInfo.m_Comptype = GFX_Engine::ComponentInfo::ComponentType::GFX_BUFFER_POOL;
-	m_impl->m_ElementsInfo.m_Comptype = GFX_Engine::ComponentInfo::ComponentType::GFX_BUFFER_POOL;
+	m_impl->m_ComponentInfo.m_Comptype = GFX_Engine::ComponentInfo<2>::ComponentType::GFX_BUFFER_POOL;
+	m_impl->m_ComponentInfo.m_Comptype = GFX_Engine::ComponentInfo<2>::ComponentType::GFX_BUFFER_POOL;
 
 	//Opengl Functions
-	glGenBuffers(1, &m_impl->m_VertexBufferInfo.m_RendererID);
-	glBindBuffer(GL_VERTEX_ARRAY, m_impl->m_VertexBufferInfo.m_RendererID);
+	glGenBuffers(1, &m_impl->m_ComponentInfo.m_RendererID[0]);
+	glBindBuffer(GL_VERTEX_ARRAY, m_impl->m_ComponentInfo.m_RendererID[0]);
 	glBufferData(GL_VERTEX_ARRAY, 1024, nullptr, GL_DYNAMIC_DRAW);
 
 	m_impl->m_SetUpAttribFunc = SetUpAttribFunc;
@@ -81,20 +80,20 @@ GFX_Engine::BufferPool::BufferPool(const std::vector<Geometry::Vertex>& VertexLi
 
 	m_impl = new impl();
 	m_impl->m_Vertices = VertexList;
-	m_impl->m_VertexBufferInfo.m_Comptype = GFX_Engine::ComponentInfo::ComponentType::GFX_BUFFER_POOL;
-	m_impl->m_ElementsInfo.m_Comptype = GFX_Engine::ComponentInfo::ComponentType::GFX_BUFFER_POOL;
+	m_impl->m_ComponentInfo.m_Comptype = GFX_Engine::ComponentInfo<2>::ComponentType::GFX_BUFFER_POOL;
+	m_impl->m_ComponentInfo.m_Comptype = GFX_Engine::ComponentInfo<2>::ComponentType::GFX_BUFFER_POOL;
 
 	//Opengl Functions
-	glGenBuffers(1, &m_impl->m_VertexBufferInfo.m_RendererID);
-	glBindBuffer(GL_VERTEX_ARRAY, m_impl->m_VertexBufferInfo.m_RendererID);
+	glGenBuffers(1, &m_impl->m_ComponentInfo.m_RendererID[0]);
+	glBindBuffer(GL_VERTEX_ARRAY, m_impl->m_ComponentInfo.m_RendererID[0]);
 	glBufferData(GL_VERTEX_ARRAY, Geometry::Vertex::GetSize() * VertexList.size(), VertexList[0].GetVertexRef(), GL_DYNAMIC_DRAW);
 
 	m_impl->m_SetUpAttribFunc = impl::DefaultSetAttributeFunction;
 	m_impl->m_SetUpAttribFunc();
 	m_impl->m_DrawCallData = impl::DefaultGenerateElementsFunction(VertexList.size() / 6);
 
-	glGenBuffers(1, &m_impl->m_ElementsInfo.m_RendererID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_ElementsInfo.m_RendererID);
+	glGenBuffers(1, &m_impl->m_ComponentInfo.m_RendererID[1]);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_ComponentInfo.m_RendererID[1]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_DrawCallData.IndiceNumber * sizeof(unsigned int), m_impl->m_DrawCallData.Indices, GL_DYNAMIC_DRAW);
 
 }
@@ -105,12 +104,12 @@ GFX_Engine::BufferPool::BufferPool(const Geometry::Vertex* VertexList, unsigned 
 	m_impl->m_Vertices.resize(BufferSize);
 	memcpy_s(&m_impl->m_Vertices[0].x, BufferSize, VertexList->GetVertexRef(), BufferSize);
 
-	m_impl->m_VertexBufferInfo.m_Comptype = GFX_Engine::ComponentInfo::ComponentType::GFX_BUFFER_POOL;
-	m_impl->m_ElementsInfo.m_Comptype = GFX_Engine::ComponentInfo::ComponentType::GFX_BUFFER_POOL;
+	m_impl->m_ComponentInfo.m_Comptype = GFX_Engine::ComponentInfo<2>::ComponentType::GFX_BUFFER_POOL;
+	m_impl->m_ComponentInfo.m_Comptype = GFX_Engine::ComponentInfo<2>::ComponentType::GFX_BUFFER_POOL;
 
 	//Opengl Functions
-	glGenBuffers(1, &m_impl->m_VertexBufferInfo.m_RendererID);
-	glBindBuffer(GL_VERTEX_ARRAY, m_impl->m_VertexBufferInfo.m_RendererID);
+	glGenBuffers(1, &m_impl->m_ComponentInfo.m_RendererID[0]);
+	glBindBuffer(GL_VERTEX_ARRAY, m_impl->m_ComponentInfo.m_RendererID[0]);
 	glBufferData(GL_VERTEX_ARRAY, Geometry::Vertex::GetSize() * BufferSize, m_impl->m_Vertices[0].GetVertexRef(), GL_DYNAMIC_DRAW);
 
 	m_impl->m_SetUpAttribFunc = impl::DefaultSetAttributeFunction;
@@ -118,8 +117,8 @@ GFX_Engine::BufferPool::BufferPool(const Geometry::Vertex* VertexList, unsigned 
 
 	m_impl->m_DrawCallData = impl::DefaultGenerateElementsFunction(BufferSize / 6);
 
-	glGenBuffers(1, &m_impl->m_ElementsInfo.m_RendererID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_ElementsInfo.m_RendererID);
+	glGenBuffers(1, &m_impl->m_ComponentInfo.m_RendererID[1]);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_ComponentInfo.m_RendererID[1]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_DrawCallData.IndiceNumber * sizeof(unsigned int), m_impl->m_DrawCallData.Indices, GL_DYNAMIC_DRAW);
 }
 
@@ -127,20 +126,20 @@ GFX_Engine::BufferPool::BufferPool(const std::vector<Geometry::Vertex>& VertexLi
 {
 	m_impl = new impl();
 	m_impl->m_Vertices = VertexList;
-	m_impl->m_VertexBufferInfo.m_Comptype = GFX_Engine::ComponentInfo::ComponentType::GFX_BUFFER_POOL;
-	m_impl->m_ElementsInfo.m_Comptype = GFX_Engine::ComponentInfo::ComponentType::GFX_BUFFER_POOL;
+	m_impl->m_ComponentInfo.m_Comptype = GFX_Engine::ComponentInfo<2>::ComponentType::GFX_BUFFER_POOL;
+	m_impl->m_ComponentInfo.m_Comptype = GFX_Engine::ComponentInfo<2>::ComponentType::GFX_BUFFER_POOL;
 
 	//Opengl Functions
-	glGenBuffers(1, &m_impl->m_VertexBufferInfo.m_RendererID);
-	glBindBuffer(GL_VERTEX_ARRAY, m_impl->m_VertexBufferInfo.m_RendererID);
+	glGenBuffers(1, &m_impl->m_ComponentInfo.m_RendererID[0]);
+	glBindBuffer(GL_VERTEX_ARRAY, m_impl->m_ComponentInfo.m_RendererID[0]);
 	glBufferData(GL_VERTEX_ARRAY, Geometry::Vertex::GetSize() * VertexList.size(), VertexList[0].GetVertexRef(), GL_DYNAMIC_DRAW);
 
 	m_impl->m_SetUpAttribFunc = SetUpAttribFun;
 	m_impl->m_SetUpAttribFunc();
 	m_impl->m_DrawCallData = impl::DefaultGenerateElementsFunction(VertexList.size() / 6);
 
-	glGenBuffers(1, &m_impl->m_ElementsInfo.m_RendererID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_ElementsInfo.m_RendererID);
+	glGenBuffers(1, &m_impl->m_ComponentInfo.m_RendererID[1]);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_ComponentInfo.m_RendererID[1]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_DrawCallData.IndiceNumber * sizeof(unsigned int), m_impl->m_DrawCallData.Indices, GL_DYNAMIC_DRAW);
 }
 
@@ -150,12 +149,12 @@ GFX_Engine::BufferPool::BufferPool(const Geometry::Vertex* VertexList, unsigned 
 	m_impl->m_Vertices.resize(BufferSize);
 	memcpy_s(&m_impl->m_Vertices[0].x, BufferSize, VertexList->GetVertexRef(), BufferSize);
 
-	m_impl->m_VertexBufferInfo.m_Comptype = GFX_Engine::ComponentInfo::ComponentType::GFX_BUFFER_POOL;
-	m_impl->m_ElementsInfo.m_Comptype = GFX_Engine::ComponentInfo::ComponentType::GFX_BUFFER_POOL;
+	m_impl->m_ComponentInfo.m_Comptype = GFX_Engine::ComponentInfo<2>::ComponentType::GFX_BUFFER_POOL;
+	m_impl->m_ComponentInfo.m_Comptype = GFX_Engine::ComponentInfo<2>::ComponentType::GFX_BUFFER_POOL;
 
 	//Opengl Functions
-	glGenBuffers(1, &m_impl->m_VertexBufferInfo.m_RendererID);
-	glBindBuffer(GL_VERTEX_ARRAY, m_impl->m_VertexBufferInfo.m_RendererID);
+	glGenBuffers(1, &m_impl->m_ComponentInfo.m_RendererID[0]);
+	glBindBuffer(GL_VERTEX_ARRAY, m_impl->m_ComponentInfo.m_RendererID[0]);
 	glBufferData(GL_VERTEX_ARRAY, Geometry::Vertex::GetSize() * BufferSize, m_impl->m_Vertices[0].GetVertexRef(), GL_DYNAMIC_DRAW);
 
 	m_impl->m_SetUpAttribFunc = SetUpAttribFun;
@@ -163,22 +162,22 @@ GFX_Engine::BufferPool::BufferPool(const Geometry::Vertex* VertexList, unsigned 
 
 	m_impl->m_DrawCallData = impl::DefaultGenerateElementsFunction(BufferSize / 6);
 
-	glGenBuffers(1, &m_impl->m_ElementsInfo.m_RendererID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_ElementsInfo.m_RendererID);
+	glGenBuffers(1, &m_impl->m_ComponentInfo.m_RendererID[1]);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_ComponentInfo.m_RendererID[1]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_DrawCallData.IndiceNumber * sizeof(unsigned int), m_impl->m_DrawCallData.Indices, GL_DYNAMIC_DRAW);
 }
 
 void GFX_Engine::BufferPool::UpdateBufferPool(const std::vector<Geometry::Vertex>& NewVertexList)
 {
 	m_impl->m_Vertices = NewVertexList;
-	glBindBuffer(GL_ARRAY_BUFFER, m_impl->m_VertexBufferInfo.m_RendererID);
+	glBindBuffer(GL_ARRAY_BUFFER, m_impl->m_ComponentInfo.m_RendererID[0]);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, m_impl->m_Vertices.size() * Geometry::Vertex::GetSize(),
 	m_impl->m_Vertices[0].GetVertexRef());
 
 	m_impl->m_DrawCallData = impl::DefaultGenerateElementsFunction(NewVertexList.size() / 6);
 
-	glGenBuffers(1, &m_impl->m_ElementsInfo.m_RendererID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_ElementsInfo.m_RendererID);
+	glGenBuffers(1, &m_impl->m_ComponentInfo.m_RendererID[1]);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_ComponentInfo.m_RendererID[1]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_DrawCallData.IndiceNumber * sizeof(unsigned int), m_impl->m_DrawCallData.Indices, GL_DYNAMIC_DRAW);
 }
 
@@ -187,21 +186,21 @@ void GFX_Engine::BufferPool::UpdateBufferPool(const Geometry::Vertex* VertexList
 	m_impl->m_Vertices.resize(BufferSize);
 	memcpy_s(&m_impl->m_Vertices[0].x, BufferSize, VertexList->GetVertexRef(), BufferSize);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_impl->m_VertexBufferInfo.m_RendererID);
+	glBindBuffer(GL_ARRAY_BUFFER, m_impl->m_ComponentInfo.m_RendererID[0]);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, BufferSize * Geometry::Vertex::GetSize(),
 	VertexList->GetVertexRef());
 
 	m_impl->m_DrawCallData = impl::DefaultGenerateElementsFunction(BufferSize/ 6);
 
-	glGenBuffers(1, &m_impl->m_ElementsInfo.m_RendererID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_ElementsInfo.m_RendererID);
+	glGenBuffers(1, &m_impl->m_ComponentInfo.m_RendererID[1]);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_ComponentInfo.m_RendererID[1]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_DrawCallData.IndiceNumber * sizeof(unsigned int), m_impl->m_DrawCallData.Indices, GL_DYNAMIC_DRAW);
 }
 
 void GFX_Engine::BufferPool::Enable() const
 {
-	glBindBuffer(GL_ARRAY_BUFFER, m_impl->m_VertexBufferInfo.m_RendererID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_ElementsInfo.m_RendererID);
+	glBindBuffer(GL_ARRAY_BUFFER, m_impl->m_ComponentInfo.m_RendererID[0]);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_impl->m_ComponentInfo.m_RendererID[1]);
 }
 
 void GFX_Engine::BufferPool::Disable() const
@@ -218,6 +217,11 @@ void GFX_Engine::BufferPool::Log() const
 GFX_Engine::BufferPool::DrawCallData GFX_Engine::BufferPool::GetDrawCallInfo() const
 {
 	return m_impl->m_DrawCallData;
+}
+
+GFX_Engine::ComponentInfo<2> GFX_Engine::BufferPool::GetComponentInfo()
+{
+	return m_impl->m_ComponentInfo;
 }
 
 GFX_Engine::BufferPool::~BufferPool()
